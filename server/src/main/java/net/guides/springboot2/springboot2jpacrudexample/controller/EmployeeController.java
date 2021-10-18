@@ -27,14 +27,17 @@ import net.guides.springboot2.springboot2jpacrudexample.repository.EmployeeRepos
 @RestController
 @RequestMapping("/api/v1")
 public class EmployeeController {
+	
 	@Autowired
 	private EmployeeRepository employeeRepository;
 
+	// returns all the employee details from the database
 	@GetMapping("/employees")
 	public List<Employee> getAllEmployees() {
 		return employeeRepository.findAll();
 	}
 
+	// returns the employee details
 	@GetMapping("/employees/{id}")
 	public ResponseEntity<Employee> getEmployeeById(@PathVariable(value = "id") Long employeeId)
 			throws ResourceNotFoundException {
@@ -43,11 +46,13 @@ public class EmployeeController {
 		return ResponseEntity.ok().body(employee);
 	}
 
+	// saving the employee details
 	@PostMapping("/employees")
 	public Employee createEmployee(@Valid @RequestBody Employee employee) {
 		return employeeRepository.save(employee);
 	}
 
+	// update employee details
 	@PutMapping("/employees/{id}")
 	public ResponseEntity<Employee> updateEmployee(@PathVariable(value = "id") Long employeeId,
 			@Valid @RequestBody Employee employeeDetails) throws ResourceNotFoundException {
@@ -61,6 +66,7 @@ public class EmployeeController {
 		return ResponseEntity.ok(updatedEmployee);
 	}
 
+	// deleting the employee 
 	@DeleteMapping("/employees/{id}")
 	public Map<String, Boolean> deleteEmployee(@PathVariable(value = "id") Long employeeId)
 			throws ResourceNotFoundException {
